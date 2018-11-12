@@ -11,7 +11,6 @@ class MemeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     @IBOutlet weak var upperTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
-    //@IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var albumButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -33,7 +32,6 @@ class MemeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera) // need to disable the camera button if not available in the Simulator
-        // sampleTextField.center = CGPoint(x: value1, y: value2)
         subscribeToKeyboardNotifications()
         upperTextField.delegate = self
         bottomTextField.delegate = self
