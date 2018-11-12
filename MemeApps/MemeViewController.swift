@@ -7,7 +7,7 @@
 //
 import UIKit
 
-class MemeViewController: UIViewController , UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class MemeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var upperTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
@@ -37,12 +37,8 @@ class MemeViewController: UIViewController , UIImagePickerControllerDelegate, UI
         subscribeToKeyboardNotifications()
         upperTextField.delegate = self
         bottomTextField.delegate = self
-        
         originalViewHight = view.frame.origin.y
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(share))
-        // navigationItem.leftBarButtonItem = UIBarButtonItem(title: "share", style: UIBarButtonItem.Style.action, target: self, action: #selector(share))
-        
         navigationItem.leftBarButtonItem?.isEnabled = false
     }
     
@@ -56,21 +52,11 @@ class MemeViewController: UIViewController , UIImagePickerControllerDelegate, UI
         // Do any additional setup after loading the view, typically from a nib.
         upperTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.defaultTextAttributes = memeTextAttributes
-        
         upperTextField.attributedPlaceholder = NSAttributedString(string: "Upper text",
                                                                attributes: memeTextAttributes)
-        
         bottomTextField.attributedPlaceholder = NSAttributedString(string: "Bottom text",
                                                                   attributes: memeTextAttributes)
     }
-
-//    @IBAction func pickAnImage(_ sender: Any) {
-//
-//        let imagePicker = UIImagePickerController()
-//        // add the delegate to handle after picking the image
-//        imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
-//        present(imagePicker, animated: true, completion: nil)
-//    }
     
     @IBAction func pickAnImageCamera(_ sender: Any) {
         let imagePicker = UIImagePickerController()
@@ -100,7 +86,6 @@ class MemeViewController: UIViewController , UIImagePickerControllerDelegate, UI
         dismiss(animated: true, completion: nil)
     }
     
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let originalImage = info[.originalImage] as? UIImage {
@@ -116,8 +101,6 @@ class MemeViewController: UIViewController , UIImagePickerControllerDelegate, UI
         }
     }
     
-
-    
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
     
@@ -130,18 +113,13 @@ class MemeViewController: UIViewController , UIImagePickerControllerDelegate, UI
     
     // shift up the frame to the hight of the keyboard's hight when keyboard is up
     @objc func keyboardWillShow(_ notification:Notification) {
-        
-        view.frame.origin.y -= getKeyboardHeight(notification)
-        
+
+        if bottomTextField.isEditing {
+            if (view.frame.origin.y == 0 ) {
+                view.frame.origin.y -= getKeyboardHeight(notification)
+            }
+        }
     }
-    
-//    // shift the frame back to the original
-//    @objc func resetKeyboard(_ notification:Notification) {
-//
-//        view.frame.origin.y -= getKeyboardHeight(notification)
-//
-//
-//    }
 
     // return the keyboard's height
     func getKeyboardHeight(_ notification:Notification) -> CGFloat {
@@ -150,6 +128,66 @@ class MemeViewController: UIViewController , UIImagePickerControllerDelegate, UI
         return keyboardSize.cgRectValue.height
     }
     
+    func save() {
+        let _ = MyMeme(original: imageView.image!, memed: memedImage!, upperText: upperTextField.text!,
+                                bottomText: bottomTextField.text!)
+    }
+    
+    @objc func share() {
+        // check if the memedImage is generated, if it is generated we will share the content
+        guard memedImage != nil else { return }
+        
+        let activityViewController = UIActivityViewController(activityItems: [memedImage!], applicationActivities: nil)
+        activityViewController.completionWithItemsHandler = {
+            (activity, success, returnedItems, activityError) in
+            
+            if (success) {
+                self.save()
+            }
+        }
+        present(activityViewController, animated: true, completion: nil)
+    }
+    
+    func generateMemedImage() -> UIImage? {
+        
+        guard let _ = imageView.image else {
+            return nil
+        }
+        // Hide toolbar and navbar
+        toolBar.isHidden = true;
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        // Render view to an image
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+        let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        // UnHide toolbar and navbar
+        toolBar.isHidden = false
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
+        return memedImage
+    }
+    
+    func disableShare(bool:Bool) {
+        
+        navigationItem.leftBarButtonItem?.isEnabled = bool
+    }
+    
+    
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        print("tap around to dismiss keyboard!")
+        view.endEditing(true)
+        view.frame.origin.y = self.originalViewHight
+        self.memedImage = self.generateMemedImage()
+        self.navigationItem.leftBarButtonItem?.isEnabled = true
+    }
+    
+    // MARK: UITextFieldDelegate methods
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         // TODO: Clear the textfield content
@@ -174,80 +212,16 @@ class MemeViewController: UIViewController , UIImagePickerControllerDelegate, UI
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         view.frame.origin.y = originalViewHight
-        memedImage = generateMemedImage()
-        self.navigationItem.leftBarButtonItem?.isEnabled = true
+        if let image = generateMemedImage() {
+            memedImage = image
+            self.navigationItem.leftBarButtonItem?.isEnabled = true
+        }
         return true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         textField.text = ""
         return true
-    }
-    
-    
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        view.endEditing(true)
-//        view.frame.origin.y = originalViewHight
-//    }
-    
-    
-    func save() {
-        
-        let _ = MyMeme(original: imageView.image!, memed: memedImage!, upperText: upperTextField.text!,
-                                bottomText: bottomTextField.text!)
-    }
-    
-    @objc func share() {
-        // check if the memedImage is generated, if it is generated we will share the content
-        guard memedImage != nil else { return }
-        
-        let activityViewController = UIActivityViewController(activityItems: [memedImage!], applicationActivities: nil)
-       // typealias CompletionWithItemsHandler = (UIActivity.ActivityType?, Bool, [Any]?, Error?) -> Void
-        activityViewController.completionWithItemsHandler = {
-            (activity, success, returnedItems, activityError) in
-            
-            if (success) {
-                self.save()
-            }
-        }
-        present(activityViewController, animated: true, completion: nil)
-       
-    }
-    
-    func generateMemedImage() -> UIImage {
-        // TODO: Hide toolbar and navbar
-        toolBar.isHidden = true;
-        self.hidesBottomBarWhenPushed = true
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        // Render view to an image
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
-        let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        // TODO: Hide toolbar and navbar
-        self.hidesBottomBarWhenPushed = false
-        toolBar.isHidden = false
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        
-        return memedImage
-    }
-    
-    func disableShare(bool:Bool) {
-        
-        navigationItem.leftBarButtonItem?.isEnabled = bool
-    }
-    
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    @objc func dismissKeyboard() {
-        print("tap around to dismiss keyboard!")
-        view.endEditing(true)
-        view.frame.origin.y = self.originalViewHight
-        self.memedImage = self.generateMemedImage()
-        self.navigationItem.leftBarButtonItem?.isEnabled = true
     }
     
 }
