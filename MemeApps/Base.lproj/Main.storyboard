@@ -17,37 +17,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BBK-7E-wAn">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BBK-7E-wAn">
                                 <rect key="frame" x="0.0" y="64" width="375" height="559"/>
-                                <color key="backgroundColor" red="0.0" green="0.99143940210000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pbg-Gx-grN">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="camera" id="Qp0-y6-CzW">
                                         <connections>
-                                            <action selector="pickAnImageCamera:" destination="BYZ-38-t0r" id="oD2-ha-vR9"/>
+                                            <action selector="pickAnImage:" destination="BYZ-38-t0r" id="iSh-z4-Gyz"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" id="SQI-L8-WZS">
                                         <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="THZ-SG-yr1">
-                                            <rect key="frame" x="46" y="7" width="289" height="30"/>
+                                            <rect key="frame" x="46" y="7" width="49" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="album"/>
                                             <connections>
-                                                <action selector="pickAnImageFromAlbum:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JMY-PT-zBJ"/>
+                                                <action selector="pickAnImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xqo-1R-N2s"/>
                                             </connections>
                                         </button>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" usesAttributedText="YES" allowsEditingTextAttributes="YES" placeholder="upper text" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1yX-c8-XTh">
-                                <rect key="frame" x="146.5" y="80" width="82.5" height="21"/>
+                                <rect key="frame" x="25" y="80" width="325" height="21"/>
                                 <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="bottom Text" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S36-w9-Eof">
-                                <rect key="frame" x="139.5" y="586" width="96" height="21"/>
+                                <rect key="frame" x="25" y="586" width="325" height="21"/>
                                 <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
@@ -58,10 +58,14 @@
                             <constraint firstItem="1yX-c8-XTh" firstAttribute="centerX" secondItem="BBK-7E-wAn" secondAttribute="centerX" id="Cwg-J3-1Tq"/>
                             <constraint firstItem="pbg-Gx-grN" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="FDH-DA-hB5"/>
                             <constraint firstItem="S36-w9-Eof" firstAttribute="bottom" secondItem="pbg-Gx-grN" secondAttribute="top" constant="-16" id="FDT-Yn-8go"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1yX-c8-XTh" secondAttribute="trailing" constant="25" id="JkH-O6-Mm7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BBK-7E-wAn" secondAttribute="trailing" id="M5r-jG-zRd"/>
+                            <constraint firstItem="1yX-c8-XTh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="25" id="Svw-ge-9oK"/>
                             <constraint firstItem="1yX-c8-XTh" firstAttribute="top" secondItem="BBK-7E-wAn" secondAttribute="top" constant="16" id="W25-mE-9fA"/>
                             <constraint firstItem="BBK-7E-wAn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="XGd-we-kNO"/>
+                            <constraint firstItem="S36-w9-Eof" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="25" id="bdv-j6-ERx"/>
                             <constraint firstItem="pbg-Gx-grN" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="d0o-av-Fw8"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="S36-w9-Eof" secondAttribute="trailing" constant="25" id="heA-Ue-Q2L"/>
                             <constraint firstItem="BBK-7E-wAn" firstAttribute="bottom" secondItem="pbg-Gx-grN" secondAttribute="top" id="lov-Xg-n5c"/>
                             <constraint firstItem="BBK-7E-wAn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="nsw-E5-bmk"/>
                             <constraint firstItem="S36-w9-Eof" firstAttribute="centerX" secondItem="BBK-7E-wAn" secondAttribute="centerX" id="odk-Vb-BPQ"/>
