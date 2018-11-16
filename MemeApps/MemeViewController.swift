@@ -54,6 +54,7 @@ class MemeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func configAttributes(textField:UITextField,withText:String){
         textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = .center // try to fix the text not in center issue
         textField.attributedPlaceholder = NSAttributedString(string:withText, attributes:memeTextAttributes)
     }
     
@@ -105,7 +106,8 @@ class MemeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 
         if bottomTextField.isEditing {
             if view.frame.origin.y == 0  {
-                view.frame.origin.y -= getKeyboardHeight(notification)
+                //view.frame.origin.y -= getKeyboardHeight(notification)
+                view.frame.origin.y = -getKeyboardHeight(notification)
             }
         }
     }

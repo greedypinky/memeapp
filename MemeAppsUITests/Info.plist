@@ -2,8 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This App requires Camera to get the photos</string>
 	<key>NSPhotoLibraryAddUsageDescription </key>
-	<string>This wil save the Meme image</string>
+	<string>This App needs to save the Meme image into Photo library</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This is the default usage of the Photo Library</string>
 	<key>CFBundleDisplayName</key>

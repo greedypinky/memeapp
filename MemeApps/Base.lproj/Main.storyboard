@@ -55,7 +55,6 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="pbg-Gx-grN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="BaC-Bx-MqZ"/>
-                            <constraint firstItem="1yX-c8-XTh" firstAttribute="centerX" secondItem="BBK-7E-wAn" secondAttribute="centerX" id="Cwg-J3-1Tq"/>
                             <constraint firstItem="pbg-Gx-grN" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="FDH-DA-hB5"/>
                             <constraint firstItem="S36-w9-Eof" firstAttribute="bottom" secondItem="pbg-Gx-grN" secondAttribute="top" constant="-16" id="FDT-Yn-8go"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1yX-c8-XTh" secondAttribute="trailing" constant="25" id="JkH-O6-Mm7"/>
@@ -68,7 +67,6 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="S36-w9-Eof" secondAttribute="trailing" constant="25" id="heA-Ue-Q2L"/>
                             <constraint firstItem="BBK-7E-wAn" firstAttribute="bottom" secondItem="pbg-Gx-grN" secondAttribute="top" id="lov-Xg-n5c"/>
                             <constraint firstItem="BBK-7E-wAn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="nsw-E5-bmk"/>
-                            <constraint firstItem="S36-w9-Eof" firstAttribute="centerX" secondItem="BBK-7E-wAn" secondAttribute="centerX" id="odk-Vb-BPQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
