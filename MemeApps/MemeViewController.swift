@@ -54,7 +54,7 @@ class MemeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func configAttributes(textField:UITextField,withText:String){
         textField.defaultTextAttributes = memeTextAttributes
-        textField.textAlignment = .center // try to fix the text not in center issue
+        textField.textAlignment = .center // Requirement: fix the text not in center issue
         textField.attributedPlaceholder = NSAttributedString(string:withText, attributes:memeTextAttributes)
     }
     
@@ -120,7 +120,7 @@ class MemeViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func save() {
-        let _ = MyMeme(original: imageView.image!, memed: memedImage!, upperText: upperTextField.text!,
+        let _ = MyMeme(originalImage: imageView.image!, memedImage: memedImage!, upperText: upperTextField.text!,
                                 bottomText: bottomTextField.text!)
     }
     
